@@ -130,7 +130,7 @@ var testForBeacons = function (request) {
 			type: 'Olark'
 		});
 	}
-	if (request.url.match(/f_pdf/) !== null && request.url.match(/duid/) !== null) {
+	if (request.url.match('f_pdf') !== null && request.url.match('uid') !== null && request.url.match('cookie') !== null) {
 		return({
 			type: 'Snowplow'
 		});
@@ -138,6 +138,11 @@ var testForBeacons = function (request) {
 	if (request.url.match(/beacon.*\.newrelic.com/) !== null) {
 		return({
 			type: 'New Relic'
+		});
+	}
+	if (request.url.match('api.mixpanel.com/track') !== null) {
+		return({
+			type: 'Mixpanel'
 		});
 	}
 };
