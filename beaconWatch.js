@@ -72,7 +72,7 @@ var isThisInteresting = function (request) {
 	var beacon = testForBeacons(request);
 	if (beacon) {
 		beacons[beacon.type] = beacons[beacon.type] || [];
-		beacons[beacon.type].push(beacon.url);
+		beacons[beacon.type].push(request.url);
 	} else {
 		return false;
 	}
@@ -83,37 +83,41 @@ var testForBeacons = function (request) {
 	if (parsedRequest.pathname.match('/b/ss') !== null) {
 		return({
 			type: 'Omniture',
-			url: request.url
 		});
 	} else
 	if (parsedRequest.host.match('adobetag.com') !== null) {
 		return({
 			type: 'Adobe Tag Container',
-			url: request.url
 		});
 	} else
 	if (request.url.match('secure-au.imrworldwide.com/cgi-bin/m') !== null) {
 		return({
 			type: 'Nielsen',
-			url: request.url
 		});
 	} else
 	if (request.url.match('__utm.gif') !== null) {
 		return({
 			type: 'Google Analytics',
-			url: request.url
 		});
 	}
 	if (parsedRequest.host.match('chartbeat.com') !== null) {
 		return({
 			type: 'Chartbeat',
-			url: request.url
 		});
 	}
 	if (request.url.match('www.facebook.com/connect') !== null) {
 		return({
 			type: 'Facebook',
-			url: request.url
+		});
+	}
+	if (request.url.match('pong.qubitproducts.com') !== null) {
+		return({
+			type: 'Qubit',
+		});
+	}
+	if (request.url.match('d3c3cq33003psk.cloudfront.net/opentag') !== null) {
+		return({
+			type: 'Qubit tag manager',
 		});
 	}
 
