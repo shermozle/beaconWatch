@@ -1,5 +1,4 @@
-beaconWatch
-===========
+# beaconWatch
 
 Use node.js to load web pages and parse out the analytics beacons of interest.
 
@@ -16,6 +15,10 @@ work and it won't work with secure sites.
 
 It's very rough, but I want to get the concept out there and hopefully better developers than I can help me make it suck less!
 
+## Dependencies
+
+### npm
+
 Requires these npm modules:
 * httpProxy
 * url
@@ -23,8 +26,10 @@ Requires these npm modules:
 * selenium-webdriver
 * optimist
 
+### Selenium
+
 You also need to have a locally running version of the Selenium server like:
-http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar
+[Version 2.41.0](http://selenium-release.storage.googleapis.com/2.41/selenium-server-standalone-2.41.0.jar)
 
 Run it with:
-java -jar selenium-server-standalone-2.41.0.jar
+`java -jar selenium-server-standalone-2.41.0.jar`
