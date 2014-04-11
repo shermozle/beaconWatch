@@ -29,6 +29,10 @@ var http = require('http'),
 			.describe('d','Enable debugging output to console.')
 			.argv;
 
+if (argv.debug) {
+	console.log('Proxy: '.red.bold + 'localhost:' + proxyPort);
+}
+
 /*
 	Proxy server that pushes any requests for s_code.js to run through the server defined above.
 	Looks at all requests and logs any analytics beacon requests to the console.
@@ -37,7 +41,7 @@ var proxyServer = httpProxy.createProxy();
 
 var outboundServer = require('http').createServer(function(req, res) {
 	if (argv.debug) {
-		console.log('Proxy: '.red.bold + req.url);
+		console.log('Request: '.blue.bold + req.url);
 	}
 	isThisInteresting(req);
 	proxyServer.web(req, res, {
@@ -55,7 +59,7 @@ var driver = new webdriver.Builder()
 		}))
     .build();
 
-driver.manage().timeouts().pageLoadTimeout(60000);
+driver.manage().timeouts().pageLoadTimeout(120000);
 driver.get(argv.url).then(function() {
 	driver.getTitle().then(function(title) {
 		console.log('Page title: '.blue.bold + title);
@@ -143,6 +147,11 @@ var testForBeacons = function (request) {
 	if (request.url.match('api.mixpanel.com/track') !== null) {
 		return({
 			type: 'Mixpanel'
+		});
+	}
+	if (request.url.match('statse.webtrendslive.com') !== null) {
+		return({
+			type: 'Webtrends'
 		});
 	}
 };
