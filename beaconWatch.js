@@ -84,20 +84,25 @@ var testForBeacons = function (request) {
 		return({
 			type: 'Omniture',
 		});
-	} else
+	}
 	if (parsedRequest.host.match('adobetag.com') !== null) {
 		return({
 			type: 'Adobe Tag Container',
 		});
-	} else
+	}
 	if (request.url.match('secure-au.imrworldwide.com/cgi-bin/m') !== null) {
 		return({
 			type: 'Nielsen',
 		});
-	} else
-	if (request.url.match('__utm.gif') !== null) {
+	} 
+	if (request.url.match('__utm.gif') !== null && parsedRequest.host === 'www.google-analytics.com') {
 		return({
 			type: 'Google Analytics',
+		});
+	} 
+	if (request.url.match('__utm.gif') !== null && parsedRequest.host === 'stats.g.doubleclick.net') {
+		return({
+			type: 'Google Analytics via Doubleclick domain',
 		});
 	}
 	if (parsedRequest.host.match('chartbeat.com') !== null) {
@@ -120,8 +125,19 @@ var testForBeacons = function (request) {
 			type: 'Qubit tag manager',
 		});
 	}
-
-	else {
-		return(false);
+	if (request.url.match('api.olark.com') !== null || request.url.match('events.olark.com') !== null) {
+		return({
+			type: 'Olark'
+		});
+	}
+	if (request.url.match(/f_pdf/) !== null && request.url.match(/duid/) !== null) {
+		return({
+			type: 'Snowplow'
+		});
+	}
+	if (request.url.match(/beacon.*\.newrelic.com/) !== null) {
+		return({
+			type: 'New Relic'
+		});
 	}
 };
