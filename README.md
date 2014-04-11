@@ -7,10 +7,14 @@ What is does is open a browser via Selenium, spin up a proxy server and tell
 Selenium to use it, then browse to your URL. The proxy parses out the URLs of
 beacons according to some basic rules.
 
+![Block diagram of beaconWatch](/beaconWatch.svg "Block diagram")
+
 Currently just a proof of concept. Aim is to have something that will drive
 Saucelabs browsers to check in all browsers and to be build into some kind of
 unit test framework. Also doesn't handle HTTPS so the Facebook beacons don't
 work and it won't work with secure sites.
+
+It's very rough, but I want to get the concept out there and hopefully better developers than I can help me make it suck less!
 
 Requires these npm modules:
 * httpProxy
