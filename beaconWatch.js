@@ -99,12 +99,12 @@ var testForBeacons = function (request) {
 			type: 'Nielsen',
 		});
 	} 
-	if (request.url.match('__utm.gif') !== null && parsedRequest.host === 'www.google-analytics.com') {
+	if ((request.url.match('__utm.gif') !== null | request.url.match('/collect') !== null) && parsedRequest.host === 'www.google-analytics.com') {
 		return({
 			type: 'Google Analytics',
 		});
 	} 
-	if (request.url.match('__utm.gif') !== null && parsedRequest.host === 'stats.g.doubleclick.net') {
+	if ((request.url.match('__utm.gif') !== null | request.url.match('/collect') !== null) && parsedRequest.host === 'stats.g.doubleclick.net') {
 		return({
 			type: 'Google Analytics via Doubleclick domain',
 		});
@@ -154,4 +154,10 @@ var testForBeacons = function (request) {
 			type: 'Webtrends'
 		});
 	}
+		if (request.url.match('www.googletagmanager.com') !== null) {
+		return({
+			type: 'Google Tag Manager'
+		});
+	}
+
 };
