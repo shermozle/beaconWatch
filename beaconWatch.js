@@ -15,9 +15,9 @@ var http = require('http'),
 		proxyPort = Math.floor(Math.random()*(12000-8000+1)+8000),
 		webdriver = require('selenium-webdriver'),
 		proxy = require('selenium-webdriver/proxy'),
-		beacons = {},
-		interestingRequest = {},
+		beacons = [],
 		beaconTests = require('./libs/beaconTests'),
+		localServer = require('./libs/localServer'),
 		argv = require('optimist')
 			.usage('Test the analytics beacons in a web page.\nUsage: $0')
 			.demand('u')
@@ -43,14 +43,19 @@ var outboundServer = require('http').createServer(function(req, res) {
 	if (argv.debug) {
 		console.log('Request: '.blue.bold + req.url);
 	}
-	var beacon = isThisInteresting(req);
+	var beacon = beaconTests(req);
 	if (beacon) {
-		console.log("Not proxying: " + req.url);
+		beacon.url = req.url;
+		beacons.push(beacon);
+	}
+	if (beacon && beacon.isBeacon) {
+		if (argv.debug) {
+			console.log("Not proxying: ".blue.bold + req.url);
+		}
 		proxyServer.web(req, res, {
-			// TODO Use something other than spamming the Big G
-			target: 'http://www.google.com/'
+			target: 'http://localhost:' + localServer.serverPort
 		}, function(e) {
-			console.log('Not proxying error: '.blue.bold + req.url);
+			console.log('Not proxying error: '.red.bold + req.url);
 			console.log(e);
 		});
 	} else {
@@ -81,19 +86,6 @@ driver.get(argv.url).then(function() {
 	driver.quit();
 }).then(function() {
 	outboundServer.close();
+}).then(function() {
+	localServer.server.close();
 });
-
-var isThisInteresting = function (request) {
-	var beacon = beaconTests(request);
-	if (beacon) {
-		beacons[beacon.type] = beacons[beacon.type] || [];
-		beacons[beacon.type].push(request.url);
-		if (beacon.isBeacon) {
-			return true;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
-};
