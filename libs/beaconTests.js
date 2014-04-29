@@ -1,6 +1,5 @@
 var url = require('url'),
 beaconTests = function (request) {
-	var parsedRequest = url.parse(request.url);
 	if (parsedRequest.pathname.match('/b/ss') !== null) {
 		return({
 			isBeacon: true,
@@ -27,7 +26,7 @@ beaconTests = function (request) {
 	} 
 	if ((request.url.match('__utm.gif') !== null | request.url.match('/collect') !== null) && parsedRequest.host === 'stats.g.doubleclick.net') {
 		return({
-			isBeacon: false,
+			isBeacon: true,
 			beaconName: 'Google Analytics via Doubleclick domain',
 		});
 	}
