@@ -1,13 +1,5 @@
 #!/usr/bin/env node
 
-/*
-	TODO
-	* Write tests for existence of particular beacons
-	* Interface somewhere so you can automate this shit
-	* Use Saucelabs instead of local Selenium
-	* GTM test mode
-*/
-
 var http = require('http'),
 		httpProxy = require('http-proxy'),
 		fs = require('fs'),
@@ -34,8 +26,7 @@ if (argv.debug) {
 }
 
 /*
-	Proxy server that pushes any requests for s_code.js to run through the server defined above.
-	Looks at all requests and logs any analytics beacon requests to the console.
+	Proxy server looks at all requests and works out which are interesting beacon requests.
 */
 var proxyServer = httpProxy.createProxy();
 
