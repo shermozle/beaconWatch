@@ -1,5 +1,6 @@
 var url = require('url'),
 beaconTests = function (request) {
+	parsedRequest = url.parse(request.url);
 	if (parsedRequest.pathname.match('/b/ss') !== null) {
 		return({
 			isBeacon: true,
@@ -88,6 +89,18 @@ beaconTests = function (request) {
 		return({
 			isBeacon: false,
 			beaconName: 'Google Tag Manager'
+		});
+	}
+	if (request.url.match('.fls.doubleclick.net/activity') !== null) {
+		return({
+			isBeacon: true,
+			beaconName: 'DoubleClick Floodlight'
+		});
+	}
+	if (request.url.match('tracker.marinsm.com/tp') !== null) {
+		return({
+			isBeacon: true,
+			beaconName: 'Marin Search Marketer'
 		});
 	}
 
