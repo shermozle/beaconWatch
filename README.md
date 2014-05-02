@@ -20,7 +20,7 @@ It's very rough, but I want to get the concept out there and hopefully better de
 ### npm
 
 Requires these npm modules:
-* httpProxy
+* http-proxy
 * url
 * colors
 * selenium-webdriver
